@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+
+%le préambule
+%pour taper son texte directement avec des lettres accentuées,
+%     donc é plutôt que \'e par exemple
+% que la césure s'effectue correctement
+% que lors de la création d'un pdf, le codage permette de
+%     copier-coller du texte d'un pdf vers le bloc note
+%     parfaitement.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{listings}
+
+
+\title{TP Administration Serveur - Apache/Tomcat}
+
+%document principal
+\begin{document}
+
+\maketitle{}
+
+\section{Introduction}
+\paragraph{}
+L'objectif du TP est de découvrir un ensemble assez large d'opérations d'administration sous debian à travers la tâche classique d'installation d'un serveur web. Les logiciels choisis pour cet exemple sont Apache httpd (plus connu sous le simple nom d'Apache) et Apache Tomcat, souvent simplement appelé Tomcat.
+
+\paragraph{}
+En dehors des configurations spécifiques à ces deux programmes, la plupart des connaissances acquises dans le cours et le TP pourront reservir pour d'autres logiciels comme Squid (serveur proxy), OpenVPN, ou d'autres applications comme un serveur DC ou un serveur Minecraft.
+
+\paragraph{}
+Le TP est découpé en trois parties : 
+\begin{enumerate}
+    \item Installation et configuration d'Apache
+    \item Installation et configuration de Tomcat
+    \item Configuration de mod\_jk pour la liaison Apache httpd/Tomcat
+\end{enumerate}
+
+\subsection{liens utiles}
+    
+Site web d'apache httpd : \textit{http://httpd.apache.org/} et sa documentation : \textit{http://httpd.apache.org/docs/2.2/}
+Site web d'apache tomcat : \textit{http://tomcat.apache.org/} et sa documentation : \textit{http://tomcat.apache.org/tomcat-7.0-doc/index.html}
+Lien de téléchargement de tomcat : \textit{http://mirrors.linsrv.net/apache/tomcat/tomcat-7/v7.0.34/bin/apache-tomcat-7.0.34.tar.gz}
+
+\section{Installation et configuration d'Apache}
+\subsection{Installation}
+
+\paragraph{}
+Apache httpd est un logiciel très répandu et est donc disponible dans les dépots debian. A moins d'avoir besoin d'une configuration très particulière nécéssitant de compiler Apache à la main, c'est la meilleure manière de l'installer.
+
+\begin{lstlisting}
+$ apt-get install apache2
+\end{lstlisting}
+
+\paragraph{}
+Apache est maintenant installé et lancé avec une configuration basique. Vous pouvez vous en convaincre en listant les services qui écoutent sur la machine : 
+
+\begin{lstlisting}
+$ netstat -a
+\end{lstlisting}
+
+\paragraph{}
+Vous devriez avoir un service écoutant sur le port 80, correspondant au service http. Tapez l'adresse du serveur dans votre navigateur. Vous devriez voir la page par défaut d'Apache (disponible dans /var/www).
+
+\subsection{Configuration de deux hôtes virtuels}
+\paragraph{}
+Par défaut, apache est configuré avec un seul hôte, dont la configuration se trouve dans le fichier /etc/apache2/sites-availables/default.
+
+\paragraph{}
+Créez deux nouveaux hôtes virtuels correspondant aux deux noms de domaines pointant sur votre serveur. Il est conseillé de copier le fichier default pour les deux nouveaux hôtes virtuels et de modifier/ajouter seulement les options intéressantes. Desactivez ensuite l'hôte par défaul via la commande a2dissite.
+
+\paragraph{}
+La documentation des différentes options de configuration est disponible dans la documentation d'apache. Regardez en particulier les options \textit{ServerName} et \textit{DocumentRoot}. Vous aurez également besoin de créer des nouveaux dossiers pour chacun des deux sites. Une bonne pratique est d'en faire des sous-dossiers de /var/www.
+
+\paragraph{}
+Une fois les sites créés et activés, testez la configuration en accédant à votre serveur depuis un navigateur en utilisant les deux noms de domaines différents.
+
+\subsection{Example de configuration avancée - Utilisation d'un Handler}
+Plouf
+
+\section{Installation et configuration de Tomcat}
+
+\subsection{Installation et lancement}
+
+\paragraph{}
+Tomcat est également disponible dans les dépots debian, cependant la dernière version (7.0) n'est pas encore disponible pour la version stable. Vous allez donc devoir télécharger tomcat sur le site web d'apache et l'installer à la main. N'oubliez pas d'installer java (pacquet sun-java6-jre) au préalable.
+
+\paragraph{}
+Téléchargez tomcat (commande wget) et décompressez l'archive à l'endroit ou vous souhaitez l'installer (commande tar). Il est conseillé d'installer les logiciels dans le dossier /opt, mais n'importe quel emplacement fera l'affaire.
+
+\paragraph{}
+La configuration par défaut de tomcat nous conviendra bien. Il s'agit maintenant de le lancer. Comme nous ne l'avons pas installé via le gestionnaire de paquet, il n'y a pas de script de lancement automatique dans /etc/init.d. Il serait possible d'en crée un mais nous n'en parlerons pas dans ce TP. Les instructions de lancement se trouvent dans le fichier RUNNING.txt de l'archive de tomcat.
+
+\paragraph{}
+Une fois tomcat lancé, la commande netstat -a devrait vous afficher un second service sur le port 8080. Vous pouvez vous en convaincre en tapant l'adresse de votre serveur dans un navigateur, en précisant le port 8080.
+
+\subsection{Configuration des droits}
+\paragraph{}
+La page d'accueil de tomcat comporte des liens d'administration du serveur (les trois boutons sur la droite). Cependant, aucun accès n'est configuré pour ces pages. Vous devrez modifier la configuration de tomcat dans le fichier conf/tomcat-users.xml et ajouter un utilisateur ayant le role "manager-gui" pour pouvoir accéder à ces pages de configuration.
+
+\section{Liaison Apache/Tomcat}
+
+\paragraph{}
+Comme vous avez pu le constater, Tomcat écoute par défaut sur le port 8080. Il n'est pas possible de le faire écouter sur le port 80 car Apache écoute déjà sur ce port. Pour accéder à tomcat sans ajouter :8080 à la fin du nom de domaine, il est possible de configurer Apache pour qu'il redirige les requêtes http à tomcat.
+
+\paragraph{}
+Il serait possible d'utiliser un handler comme nous l'avons fait pour le c++, mais cette solution serait complexe et inutile puisqu'il existe un mod apache permettant de faire cette liaison : mod\_jk.
+
+\paragraph{}
+Installer mod\_jk (pacquet libapache2-mod-jk) et activez le via la commande a2enmod. La configuration se fait dans le fichier /etc/libapache2-mod-jk/workers.properties. Les options intéressantes sont en particulier la localisation de votre installation de tomcat et la localisation de votre JRE. Vous pouvez également regarder la configuration du "worker" correspondant à tomcat et relever son nom (il s'agit su seul worker configuré par défaut).
+
+\paragraph{}
+Vous devez ensuite configurer l'emplacement du fichier de configuration dans le fichier /etc/apache2/mods-available/jk.load avec l'option de configuration JkWorkersFile. Vous devrez ensuite configurer l'un de vos virtualhosts pour utiliser le worker correspondant à tomcat via l'option JkMount. La documentation de ces options est disponible sur le site d'apache httpd.
+
+\paragraph{}
+L'objectif de cette configuration est de pouvoir accéder au manager tomcat via l'adresse de votre serveur, mais sans préciser le port 8080. Si vous réussissez cette partie, vous opuvez essayer de déployer une application Java EE et d'y accéder en adptant votre configuration.
+\end{document}
