@@ -28,7 +28,7 @@
 
 \section{Introduction}
 \paragraph{}
-L'objectif du TP est de découvrir un ensemble assez large d'opérations d'administration sous debian à travers la tâche classique d'installation d'un serveur web. Les logiciels choisis pour cet exemple sont Apache httpd (plus connu sous le simple nom d'Apache) et Apache Tomcat, souvent simplement appelé Tomcat.
+L'objectif du TP est de découvrir un ensemble assez large d'opérations d'administration sous Debian à travers la tâche classique d'installation d'un serveur web. Les logiciels choisis pour cet exemple sont Apache httpd (plus connu sous le simple nom d'Apache) et Apache Tomcat, souvent simplement appelé Tomcat.
 
 \paragraph{}
 En dehors des configurations spécifiques à ces deux programmes, la plupart des connaissances acquises dans le cours et le TP pourront resservir pour d'autres logiciels comme Squid (serveur proxy), OpenVPN, ou d'autres applications comme un serveur DC ou un serveur Minecraft.
@@ -43,9 +43,9 @@ Le TP est découpé en trois parties :
 
 \subsection{liens utiles}
     
-Site web d'apache httpd : \textit{http://httpd.apache.org/} et sa documentation : \textit{http://httpd.apache.org/docs/2.2/}
-Site web d'apache tomcat : \textit{http://tomcat.apache.org/} et sa documentation : \textit{http://tomcat.apache.org/tomcat-7.0-doc/index.html}
-Lien de téléchargement de tomcat : \textit{http://mirrors.linsrv.net/apache/tomcat/tomcat-7/v7.0.34/bin/apache-tomcat-7.0.34.tar.gz}
+Site web d'Apache httpd : \textit{http://httpd.apache.org/} et sa documentation : \textit{http://httpd.apache.org/docs/2.2/}
+Site web d'Apache Tomcat : \textit{http://tomcat.apache.org/} et sa documentation : \textit{http://tomcat.apache.org/tomcat-7.0-doc/index.html}
+Lien de téléchargement de Tomcat : \textit{http://mirrors.linsrv.net/apache/tomcat/tomcat-7/v7.0.34/bin/apache-tomcat-7.0.34.tar.gz}
 
 \section{Installation et configuration d'Apache}
 \subsection{Installation}
@@ -112,7 +112,7 @@ Comme vous avez pu le constater, Tomcat écoute par défaut sur le port 8080. Il
 Il serait possible d'utiliser un handler comme nous l'avons fait pour le C++, mais cette solution serait complexe et inutile puisqu'il existe un module apache permettant de faire cette liaison : mod\_jk.
 
 \paragraph{}
-Installer mod\_jk (pacquet libapache2-mod-jk) et activez-le via la commande a2enmod. La configuration se fait dans le fichier /etc/libapache2-mod-jk/workers.properties. Les options intéressantes sont en particulier la localisation de votre installation de Tomcat et la localisation de votre JRE. Vous pouvez également regarder la configuration du "worker" correspondant à Tomcat et relever son nom (il s'agit du seul worker configuré par défaut).
+Installer mod\_jk (paquet libapache2-mod-jk) et activez-le via la commande a2enmod. La configuration se fait dans le fichier /etc/libapache2-mod-jk/workers.properties. Les options intéressantes sont en particulier la localisation de votre installation de Tomcat et la localisation de votre JRE. Vous pouvez également regarder la configuration du "worker" correspondant à Tomcat et relever son nom (il s'agit du seul worker configuré par défaut).
 
 \paragraph{}
 Vous devez ensuite configurer l'emplacement du fichier de configuration dans le fichier /etc/apache2/mods-available/jk.load avec l'option de configuration JkWorkersFile. Vous devrez ensuite configurer l'un de vos virtualhosts pour utiliser le worker correspondant à Tomcat via l'option JkMount. La documentation de ces options est disponible sur le site d'Apache httpd.
