@@ -31,15 +31,10 @@
 L'objectif du TP est de découvrir un ensemble assez large d'opérations d'administration sous Debian à travers la tâche classique d'installation d'un serveur web. Les logiciels choisis pour cet exemple sont Apache httpd (plus connu sous le simple nom d'Apache) et Apache Tomcat, souvent simplement appelé Tomcat.
 
 \paragraph{}
-En dehors des configurations spécifiques à ces deux programmes, la plupart des connaissances acquises dans le cours et le TP pourront resservir pour d'autres logiciels comme Squid (serveur proxy), OpenVPN, ou d'autres applications comme un serveur DC ou un serveur Minecraft.
+En dehors des configurations spécifiques à ces deux programmes, la plupart des connaissances acquises dans le cours et le TP pourront resservir pour d'autres logiciels comme Squid (serveur proxy), OpenVPN, ou d'autres cas plus particuliers (serveur DC ou serveur Minecraft par exemple).
 
 \paragraph{}
-Le TP est découpé en trois parties : 
-\begin{enumerate}
-    \item Installation et configuration d'Apache
-    \item Installation et configuration de Tomcat
-    \item Configuration de mod\_jk pour la liaison Apache httpd/Tomcat
-\end{enumerate}
+Certaines étapes du TP ne sont volontairement pas trop détaillées. L'objectif est d'apprendre à utiliser les pages de manuel (commande man) et la documentation des logiciels. Cependant, n'hésitez pas à poser des questions si vous êtes bloqués !
 
 \subsection{liens utiles}
     
@@ -47,18 +42,26 @@ Site web d'Apache httpd : \textit{http://httpd.apache.org/} et sa documentation 
 Site web d'Apache Tomcat : \textit{http://tomcat.apache.org/} et sa documentation : \textit{http://tomcat.apache.org/tomcat-7.0-doc/index.html}
 Lien de téléchargement de Tomcat : \textit{http://mirrors.linsrv.net/apache/tomcat/tomcat-7/v7.0.34/bin/apache-tomcat-7.0.34.tar.gz}
 
+\subsection{Environnement de travail}
+\paragraph{}
+Afin d'être dans des conditions les plus réalistes possibles, vous allez travailler sur un serveur dédié (virtuel) hébergé chez ovh. Vous disposez d'un serveur et de l'accès root correspondant (demandez nous le mot de passe root !).
+
+\paragraph{}
+Chaque serveur est pointé par deux noms de domaines : a.bx.3f0.net et b.bx.3f0.net, ou "x" est le numéro de votre binome (de 1 à 8). Connectez vous avec ssh à votre serveur et démarrez le TP !
+
 \section{Installation et configuration d'Apache}
 \subsection{Installation}
 
-\paragraph{}
+\subsubsection{Installez Apache httpd}
 Apache httpd est un logiciel très répandu et est donc disponible dans les dépots Debian. A moins d'avoir besoin d'une configuration très particulière nécéssitant de compiler Apache à la main, c'est la meilleure manière de l'installer.
 
 \begin{lstlisting}
 $ apt-get install apache2
 \end{lstlisting}
 
+\subsubsection{Vérifiez que Apache fonctionne}
 \paragraph{}
-Apache est maintenant installé et lancé avec une configuration basique. Vous pouvez vous en convaincre en listant les services qui écoutent sur la machine : 
+Apache est installé et lancé avec une configuration basique. Vous pouvez vous en convaincre en listant les services qui écoutent sur le serveur : 
 
 \begin{lstlisting}
 $ netstat -a
@@ -69,16 +72,25 @@ Vous devriez avoir un service écoutant sur le port 80, correspondant au service
 
 \subsection{Configuration de deux hôtes virtuels}
 \paragraph{}
-Par défaut, apache est configuré avec un seul hôte, dont la configuration se trouve dans le fichier /etc/apache2/sites-availables/default.
+Par défaut, apache est configuré avec un seul hôte, dont la configuration se trouve dans le fichier /etc/apache2/sites-availables/default. La racine par défaut du serveur est /var/www.
+
+\subsubsection{Créez les répertoires racines de chacun des sites web}
+Il est nécéssaire de créer un répertoire racine pour chacun des hôtes virtuels. Une pratique courante est d'en faire des sous-dossiers de /var/www. Créez un fichier index.html dans chacun de ces dossiers, avec un signe distinctif qui vous permettra de vérifier le bon fonctionnement de votre configuration.
+
+\subsubsection{Créez les deux hôtes virtuels}
 
 \paragraph{}
-Créez deux nouveaux hôtes virtuels correspondant aux deux noms de domaines pointant sur votre serveur. Il est conseillé de copier le fichier default pour les deux nouveaux hôtes virtuels et de modifier/ajouter seulement les options intéressantes. Desactivez ensuite l'hôte par défaut via la commande a2dissite.
-
-\paragraph{}
-La documentation des différentes options de configuration est disponible dans la documentation d'Apache. Regardez en particulier les options \textit{ServerName} et \textit{DocumentRoot}. Vous aurez également besoin de créer des nouveaux dossiers pour chacun des deux sites. Une bonne pratique est d'en faire des sous-dossiers de /var/www.
+Ces deux hôtes virtuels doivent correspondre aux deux noms de domaines pointant sur votre serveur. Il est conseillé de copier le fichier default pour les deux nouveaux hôtes virtuels et de modifier/ajouter seulement les options intéressantes. Desactivez ensuite l'hôte par défaut.
 
 \paragraph{}
 Une fois les sites créés et activés, testez la configuration en accédant à votre serveur depuis un navigateur en utilisant les deux noms de domaines différents.
+
+\paragraph{}
+Documentation intéressante : 
+\begin{itemize}
+\item Le manuel de la commande a2ensite/a2dissite
+\item La documentation des options de configuration ServerName, DocumentRoot, et des virtualhosts en général
+\end{itemize}
 
 \subsection{Example de configuration avancée - Utilisation d'un Handler}
 Plouf
@@ -88,35 +100,66 @@ Plouf
 \subsection{Installation et lancement}
 
 \paragraph{}
-Tomcat est également disponible dans les dépots Debian, cependant la dernière version (7.0) n'est pas encore disponible pour la version stable. Vous allez donc devoir télécharger tomcat sur le site web d'apache et l'installer à la main. N'oubliez pas d'installer java (pacquet sun-java6-jre) au préalable.
+Tomcat est également disponible dans les dépots Debian, cependant la dernière version (7.0) n'est pas encore disponible pour la version stable. Vous allez donc devoir télécharger tomcat sur le site web d'apache et l'installer à la main.
+
+\subsubsection{Installez java via le gestionnaire de paquets}
+Le nom du paquet qui nous intéresse est sun-java6-jdk
+
+\subsubsection{Téléchargez et décompressez tomcat}
+\paragraph{}
+L'adresse de téléchargement est disponible dans les liens utiles au début du TP. En général, les logiciels installés à la main sont installés dans le dossier /opt. Vous pouvez également l'installer ailleurs, mais il vous faudra adapter certaines étapes de la suite du TP.
 
 \paragraph{}
-Téléchargez tomcat (commande wget) et décompressez l'archive à l'endroit ou vous souhaitez l'installer (commande tar). Il est conseillé d'installer les logiciels dans le dossier /opt, mais n'importe quel emplacement fera l'affaire.
+Documentation intéressante
+\begin{itemize}
+\item Le manuel de la commande wget
+\item La manuel de la commande tar
+\end{itemize}
+
+\subsubsection{Lancez Tomcat}
+\paragraph{}
+La configuration par défaut de Tomcat nous conviendra bien. Il s'agit maintenant de le lancer. Comme nous ne l'avons pas installé via le gestionnaire de paquets, il n'y a pas de script de lancement automatique dans /etc/init.d. Il serait possible d'en créer un mais nous n'en parlerons pas dans ce TP. Les instructions de lancement se trouvent dans le fichier RUNNING.txt de l'archive de tomcat (sections 3 et 4). Pour l'emplacement de la jdk, cherchez du coté de /usr/lib/jvm.
 
 \paragraph{}
-La configuration par défaut de Tomcat nous conviendra bien. Il s'agit maintenant de le lancer. Comme nous ne l'avons pas installé via le gestionnaire de paquets, il n'y a pas de script de lancement automatique dans /etc/init.d. Il serait possible d'en créer un mais nous n'en parlerons pas dans ce TP. Les instructions de lancement se trouvent dans le fichier RUNNING.txt de l'archive de tomcat.
+Une fois Tomcat lancé, testez son bon fonctionnement en vous connectant à votre serveur sur le port 8080 depuis votre navigateur (http://a.bx.3f0.net:8080/).
 
+\subsubsection{Configurez les droits pour pouvoir accéder au manager}
 \paragraph{}
-Une fois Tomcat lancé, la commande netstat -a devrait vous afficher un second service sur le port 8080. Vous pouvez vous en convaincre en tapant l'adresse de votre serveur dans un navigateur, en précisant le port 8080.
-
-\subsection{Configuration des droits}
-\paragraph{}
-La page d'accueil de Tomcat comporte des liens d'administration du serveur (les trois boutons sur la droite). Cependant, aucun accès n'est configuré pour ces pages. Vous devrez modifier la configuration de Tomcat dans le fichier conf/tomcat-users.xml et ajouter un utilisateur ayant le role "manager-gui" pour pouvoir accéder à ces pages de configuration.
+La page d'accueil de Tomcat comporte des liens d'administration du serveur (les trois boutons sur la droite). Cependant, aucun accès n'est configuré pour ces pages. Vous devrez modifier la configuration de Tomcat dans le fichier conf/tomcat-users.xml et ajouter un utilisateur ayant le role "manager-gui" pour pouvoir accéder à ces pages de configuration. N'oubliez pas de redémarrer Tomcat avant de tester !
 
 \section{Liaison Apache/Tomcat}
 
 \paragraph{}
-Comme vous avez pu le constater, Tomcat écoute par défaut sur le port 8080. Il n'est pas possible de le faire écouter sur le port 80 car Apache écoute déjà sur ce port. Pour accéder à Tomcat sans ajouter :8080 à la fin du nom de domaine, il est possible de configurer Apache pour qu'il redirige les requêtes http à tomcat.
+Comme vous avez pu le constater, Tomcat écoute par défaut sur le port 8080. Il n'est pas possible de le faire écouter sur le port 80 car Apache écoute déjà sur ce port. Pour accéder à Tomcat sans ajouter :8080 à la fin du nom de domaine, il est possible de configurer Apache pour qu'il redirige certaines requêtes http à tomcat.
 
 \paragraph{}
 Il serait possible d'utiliser un handler comme nous l'avons fait pour le C++, mais cette solution serait complexe et inutile puisqu'il existe un module apache permettant de faire cette liaison : mod\_jk.
 
+\subsubsection{Installez le connecteur mod\_jk}
 \paragraph{}
-Installer mod\_jk (paquet libapache2-mod-jk) et activez-le via la commande a2enmod. La configuration se fait dans le fichier /etc/libapache2-mod-jk/workers.properties. Les options intéressantes sont en particulier la localisation de votre installation de Tomcat et la localisation de votre JRE. Vous pouvez également regarder la configuration du "worker" correspondant à Tomcat et relever son nom (il s'agit du seul worker configuré par défaut).
+Le nom du paquet est "libapache2-mod-jk". 
+
+\subsubsection{Configurez le worker correspondant à tomcat}
+La configuration se fait dans le fichier /etc/libapache2-mod-jk/workers.properties. Les options intéressantes sont en particulier la localisation de votre installation de Tomcat et la localisation de votre JRE. Relevez le nom du worker, il sera utile plus tard.
 
 \paragraph{}
-Vous devez ensuite configurer l'emplacement du fichier de configuration dans le fichier /etc/apache2/mods-available/jk.load avec l'option de configuration JkWorkersFile. Vous devrez ensuite configurer l'un de vos virtualhosts pour utiliser le worker correspondant à Tomcat via l'option JkMount. La documentation de ces options est disponible sur le site d'Apache httpd.
+Vous devez ensuite configurer l'emplacement du fichier de configuration dans le fichier /etc/apache2/mods-available/jk.load avec l'option de configuration JkWorkersFile.
+
+\subsubsection{Configurez l'un de vos virtualhosts pour rediriger toutes les requètes vers Tomcat}
+Choisissez l'un de vos virtualhosts et modifier son fichier de configuration.
 
 \paragraph{}
-L'objectif de cette configuration est de pouvoir accéder au manager Tomcat via l'adresse de votre serveur, mais sans préciser le port 8080. Si vous réussissez cette partie, vous pouvez essayer de déployer une application Java EE et d'y accéder en adptant votre configuration.
+Documentation utile : 
+\begin{itemize}
+\item Documentation de l'option JkMount d'Apache.
+\item Documentation du mod\_jk en général
+\end{itemize}
+
+\subsubsection{Testez votre configuration en accédant au virtualhost que vous venez de configurer}
+\paragraph{}
+Vous devriez avoir accès à la page d'accueil de Tomcat en vous rendant sur le virtualhost que vous venez de configurer \textbf{sans} préciser le numéro de port. La requête doit bien être recue par apache, puis transmise à Tomcat.
+
+\subsubsection{Optionnel : Déployez un application Java EE}
+\paragraph{}
+Vous pouvez maintenant déployer une application Java EE via l'interface de tomcat, et y accéder via apache (http://a.bx.3f0.net/application). Si vous voulez y accéder directement, sans préciser le nom de l'application
 \end{document}
