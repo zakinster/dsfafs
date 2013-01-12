@@ -93,7 +93,33 @@ Documentation intéressante :
 \end{itemize}
 
 \subsection{Example de configuration avancée - Utilisation d'un Handler}
-Plouf
+
+\subsubsection{Du contenu statique au contenu dynamique}
+
+\paragraph{}
+A présent que le serveur HTTP Apache est installé et que la gestion de contenu statique est fonctionnelle, il est maintenant possible de s'intéresser à la gestion de contenu dynamique. Pour ce faire il existe plusieurs méthodes qui permettent d'interfacer Apache avec du code externe capable d'interpréter des pages dynamiques. Nous allons ici nous intéresser à la plus simple d'entre elles : le CGI.
+
+\subsubsection{Un handler CGI}
+
+\paragraph{}
+L'objectif est de déléguer la gestion de certains types de fichiers à un executable externe à Apache. La première étape consiste donc à obtenir cet executable, que l'on appelera \textit{Handler}. Vous disposez dans les fichiers du TP du fichier source d'un handler simpliste développé en C++. Afin qu'Apache puisse executer ce programme, vous devez le compiler puis placer l'executable dans le dossier $/usr/lib/cgi-bin/$.
+
+\subsubsection{Configuration du handler}
+\paragraph{}
+Pour la suite de cette partie, la configuration se fera sur un des VirtualHost définis préalablement.
+
+\paragraph{}
+Pour déléguer la gestion de certain types de fichiers vous devez commencer par définir les extensions de fichiers que vous voulez prendre en compte en utilisant la commande AddHandler.
+
+\begin{lstlisting}
+AddHandler app-binary .c 
+\end{lstlisting}
+
+Vous devez ensuite définir le handler que vous voulez appeler en utilisant la commande Action.
+
+\begin{lstlisting}
+Action app-binary /cgi-bin/handler
+\end{lstlisting}
 
 \section{Installation et configuration de Tomcat}
 
