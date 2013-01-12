@@ -1,0 +1,128 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{color}
+%\usepackage{multirow}
+\usepackage{textcomp}
+\usepackage[english,french]{babel}
+\usepackage{verbatim}
+\usepackage{minted}
+
+
+\usetheme{Luebeck}%options du thème
+\usecolortheme[RGB={114,25,0}]{structure}
+\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=true]
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}{--}
+
+\setbeamertemplate{footline}%affichage du numéro de page
+{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle \hspace{\fill}\insertframenumber{}/\inserttotalframenumber
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\makeatletter%commande superviser
+\def\encadrant{\@dblarg\beamer@encadrant}
+\long\def\beamer@encadrant[#1]#2{%
+  \def\insertencadrant{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle%
+  }Encadrants:\and#2}%
+}
+\makeatother
+
+\setbeamertemplate{title page}%modification de la page de titre
+{%
+  \vbox{}
+  \vfill
+  \begin{centering}
+%Bloc de titre
+    \begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+%Auteurs
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+%Encadrants
+%    \vskip0.5em\par
+    \begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{encadrant}
+      \footnotesize\itshape \insertencadrant
+    \end{beamercolorbox}
+%Etablissement
+    \begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+%Date
+    \begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \end{centering}
+  \vfill
+}
+
+\newcommand{\slidepoker}[2]{
+\begin{frame}[plain]
+\setcounter{framenumber}{#2}
+		\begin{figure}
+			\includegraphics[scale=0.239]{img/s#1.jpg}
+		\end{figure}
+\end{frame}
+}
+
+\AtBeginSection[]%affichage du plan à chaque début de section
+{
+  \begin{frame}%Plan auto
+    \frametitle{Plan}
+    %\transdissolve
+    \tableofcontents[currentsection,subsections,hideothersubsections]
+  \end{frame}
+}
+
+%Profondeur de la table des matières
+\setcounter{tocdepth}{1}
+
+%\setbeameroption{show notes}
+%\setbeameroption{hide notes}%default
+
+\title{\bsc{Titre}}
+\subtitle{Administration d'un serveur sous linux}
+\author[Averty\and Barateau\and Maloeuvre\and Percot-Tétu]{Benoit~Averty\and Yann~Barateau\and Nicolas~Maloeuvre\and Sacha~Percot-Tétu}
+\institute{Institut National des Sciences Appliquées de Rennes}
+\date{14 Janvier 2013}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\input{Introduction}
+
+\begin{frame}
+\frametitle{Plan}
+\tableofcontents
+\end{frame}
+
+\input{Partie1}
+\input{Partie2}
+\input{Partie3}
+\input{Partie4}
+
+\end{document}

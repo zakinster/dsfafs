@@ -1,0 +1,150 @@
+\section{Architecture et conception}
+
+\subsection{Bibliothèque ImageIn}
+%Sacha, 4'
+
+\begin{frame}
+	\frametitle{Une bibliothèque de traitement d'images}
+	\begin{center}
+	\includegraphics[scale=0.58]{couches.pdf}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Une représentation générique et extensible des images}
+	\begin{itemize}
+		\item Une classe générique : \texttt{Image\_t}
+		    \begin{itemize}
+			\item Généralisation de la profondeur par template
+		    \end{itemize}
+		    \small
+		    ~~~$\longrightarrow$ Permet de représenter tout type d'images\\
+		    ~~~$\longrightarrow$ Permet de faire des algorithmes génériques
+		    \normalsize
+        ~\\~\\
+		\item Des classes spécialisées : \texttt{RgbImage\_t}, \texttt{GrayscaleImage\_t}
+		    \begin{itemize}
+		    \item Spécialisation par héritage de \texttt{Image\_t}
+		    \end{itemize}
+		    \small
+		     ~~~$\longrightarrow$ Simplifie l'interface d'utilisation\\
+		     ~~~$\longrightarrow$ Permet de typer les algorithmes
+		    \normalsize
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Une représentation générique et extensible des algorithmes}
+	\begin{itemize}
+		\item Un classe abstraite générique : \texttt{GenericAlgorithm\_t}
+		    \begin{itemize}
+			\item Généralisation de l'arité par template
+		    \end{itemize}
+		    \small
+		    ~~~$\longrightarrow$ Augmente l'expressivité\\
+		    ~~~$\longrightarrow$ Simplifie l'interface d'utilisation
+		    \normalsize
+		\item Une classe abstraite spécifique : \texttt{Algorithm\_t}\\
+		    \begin{itemize}
+		    \item Spécialisation par héritage de \texttt{GenericAlgorithm\_t}
+		    \item Typage de l'image de retour par template
+		    \end{itemize}
+       \tiny ~\\ \normalsize
+    \item Simple à mettre en oeuvre pour l'utilisateur
+        \begin{itemize}
+            \item Une seule méthode à implémenter
+        \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Fonctionnalités supplémentaires}
+	Un ensemble d'outils :
+	\begin{itemize}
+  
+		\item Calcul d'histogrammes et d'histogrammes de projection
+		\item Algorithmes utilitaires de traitement
+		\begin{itemize}
+		    \item Opérations pixels par pixels ($+,-,\times,/,\sim,\&,|$), distances, etc.
+		\end{itemize}
+	\end{itemize}
+  ~\\
+
+	Un environnement de test automatique :
+	\begin{itemize}
+	    \item Cadre de développement pour tester les algorithmes 
+	\end{itemize}
+\end{frame}
+
+\subsection{Interface générique}
+%Samuel, 4'
+
+\begin{frame}
+	\frametitle{La base des applications pédagogiques}
+	Applications unitaires~:
+	\begin{itemize}
+		\item Un algorithme par application
+	\end{itemize}
+
+\vspace{0.6cm}
+
+	Interface générique :
+	\begin{itemize}
+		\item Ergonomie commune pour les applications
+		\item Facilité de développement
+		\item Liberté d'enrichissement et de personnalisation
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Des services pour contrôler l'interface}
+	\begin{itemize}
+		\item Services de base pour un fonctionnement minimal
+			\begin{itemize}
+				\item Gestion ouverture/sauvegarde
+				\item Gestion des images ouvertes
+				\item Gestion menus contextuels
+			\end{itemize}
+		\item Un service dédié aux algorithmes
+		\item Ajout de services pour personnaliser
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Des widgets pour agrémenter l'utilisation}
+	\begin{itemize}
+		\item Widgets de base assurant une ergonomie commune
+			\begin{itemize}
+				\item Affichage des images
+				\item Affichage d'histogrammes (normaux, projections, etc.)
+				\item Une grille de pixels
+				\item Une barre de navigation 
+			\end{itemize}
+	\end{itemize}
+	\begin{center}
+		\includegraphics[scale=0.25]{Images/nav.png}~~~~
+		\includegraphics[scale=0.25]{Images/histo.png}
+	\end{center}
+
+
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Widgets réutilisables
+	\end{itemize}
+	\begin{center}
+		\includegraphics[scale=0.3]{Images/bit.png}\\
+		\scriptsize Exemple du widget de BitPlane, une de nos applications
+	\end{center}
+\end{frame}
+	
+\begin{frame}
+	\begin{itemize}
+		\item Chaque application peut avoir ses propres widgets
+	\end{itemize}
+	\begin{center}
+		\includegraphics[scale=0.28]{Images/bina.png}\\
+		\scriptsize Exemple du widget de Binarisation, une de nos applications
+	\end{center}
+\end{frame}
