@@ -98,9 +98,11 @@
 \begin{frame}
 	\frametitle{Fichiers de configuration (3/3)}
 	\begin{itemize}
-	      \item Sites-available
+	      \item sites-available/
 	      \begin{itemize}
-		  \item Ce dossier contient différents \textit{virtual hosts}. Il permet de définir plusieurs sites sur une même machine. Par exemple, on peut définir des sous-domaines (ex : machin.domain.tld), ainsi que d'autres domaines (ex : autredomain.tld). Les sites activés sont placés dans le dossier sites-enabled.
+		 	\item Ce dossier contient différents \textit{virtual hosts}. Ce mécanisme permet de définir plusieurs sites sur une même machine. 
+		  	\item Le choix du bon virtual host est fait grace à l'entête \og{} Host: \fg{} de la requête http.
+		  	\item L'activation d'un site se fait via la commande a2ensite. Un lien symbolique vers le fichier est créé dans sites-enabled/.
 	      \end{itemize}
 	\end{itemize}
 	\begin{center}
@@ -113,9 +115,14 @@
 \begin{frame}
 	\frametitle{Les modules}
 	\begin{itemize}
-	  \item Il est possible d'ajouter des modules à apache, ajoutant ainsi des fonctionnalités au serveur web. Ces modules sont dans le dossier \textit{mods-available}.
-	  \item On exécute le fichier .load correspondant à un module pour charger celui-ci. Le module apparaît alors dans le dossier \textit{mods-enabled}.
-	  \item Lors du TP, nous utiliserons le module \textit{mod\_actions}. Celui-ci possède une directive \textit{Action} qui permet d'exécuter des scripts CGI lorsqu'un certain type de contenu MIME est requis.
+	  \item Il est possible d'ajouter des modules à apache, ajoutant ainsi des fonctionnalités au serveur web. 
+	  \item Beaucoup de fonctionnalités courantes sont en fait des modules et peuvent être désactivées
+	  \begin{itemize}
+	  	\item mod\_rewrite : pour l'url rewriting
+	  	\item mod\_ssl : pour le ssl (http\textbf{s}://...)
+	  	\item mod\_auth\_basic : pour l'authentification des utilisateurs
+	  \end{itemize}
+	  \item Utilisation de modules dans le TP : mod\_actions et mod\_jk.
 	\end{itemize}
 \end{frame}
 
