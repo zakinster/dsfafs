@@ -1,13 +1,67 @@
 \section{Tomcat : conteneur de servlet Java EE}
 %Nicolas
-
-\subsection{Mise en situation}
-\begin{frame}
-  Eudes Euzie a imaginé un algorithme révolutionnaire et désire pouvoir en faire
-  profiter ses pairs, il choisit \bsc{Detiq-T}~:
-
+\subsection{Presentation}
+\frame{\frametitle{Présentation Tomcat}
   \begin{itemize}
-    \item Implémentation facilitée de l'algorithme (\bsc{ImageIn})
-    \item Création rapide d'une interface graphique (\bsc{GenericInterface})
+    \item Projet open-source de la fondation Apache
+    \item Un serveur d'applications Java
+    \begin{itemize}
+      \item Java Servlet
+      \item JavaServer Pages
+    \end{itemize}
+    \item Souvent utilisé avec un serveur web
   \end{itemize}
-\end{frame}
+  }
+\frame{\frametitle{Présentation Tomcat}
+		\framesubtitle{Serveur d'application}
+  \includegraphics[scale=0.5]{Images/serveurapp.png}
+}
+
+
+\subsection{Lists I}
+\frame{\frametitle{unnumbered lists}
+\begin{itemize}
+\item Introduction to  \LaTeX  
+\item Course 2 
+\item Termpapers and presentations with \LaTeX 
+\item Beamer class
+\end{itemize} 
+}
+
+
+\frame{\frametitle{Configuration Tomcat}
+
+		\framesubtitle{Arborescence}
+		Répertoire d'installation : CATALINA\_HOME
+\begin{itemize} 
+    \item \textbf{bin/} exécutables de Tomcat(démarrage du serveur)
+    \item \textbf{common/} classes et librairies partagées par les applications web
+    \item \textbf{conf/}
+    \item \textbf{Logs/}
+    \item \textbf{server/} contient les applications web du serveur en lui-même
+    \item \textbf{shared/} contient les classes et librairies partagées par toutes les applications web hébergées sur le serveur
+    \item \textbf{temp/}
+    \item \textbf{webapps/} contient les applications web
+    \item \textbf{work/} contient les JSP compilées
+\end{itemize} 
+}
+
+
+\frame[containsverbatim]{\frametitle{Configuration Tomcat}
+		\framesubtitle{Server.xml}
+		Eléments Engine et Host
+		\begin{itemize} 
+   		\item \textbf{Elément Engine} : modélise le moteur de servlet, contient un ou plusieurs
+hosts
+    	\item \textbf{Elément Host} hôte virtuel (doit être associé à l'adresse IP de cen serveur)
+		\end{itemize}
+
+		\begin{lstlisting}
+<Engine name="Catalina">
+<Host name="localhost" appBase="webapps"
+unpackWARs="true" autoDeploy="true">
+<!-- contenu de l'élément Host -->
+</Host>
+</Engine>
+		\end{lstlisting}
+}
