@@ -50,7 +50,7 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveur
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{conf/server.xml}
 
 \begin{itemize}
@@ -69,7 +69,7 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveur
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{conf/server.xml}
 		Elément Connecteur
 		\begin{itemize} 
@@ -78,17 +78,17 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveur
       \item C'est l'élément qui reçoit les requêtes HTTP et les transmet au conteneur de servlet
 		\end{itemize}
 
-		\begin{lstlisting}
+        \begin{lstlisting}
 <Connector port="8080"
-	protocol="HTTP/1.1"
-	connectionTimeout="20000"
-	maxThread="100"
-	maxCount="100"
-	redirectPort="8443" />
-		\end{lstlisting}
+    protocol="HTTP/1.1"
+    connectionTimeout="20000"
+    maxThread="100"
+    maxCount="100"
+    redirectPort="8443" />
+        \end{lstlisting}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
     \frametitle{conf/server.xml}
 		Eléments Engine et Host
 		\begin{itemize}
@@ -96,27 +96,27 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveur
     	\item \textbf{Elément Host} hôte virtuel (Similaire aux virtualhosts d'Apache)
 		\end{itemize}
 
-		\begin{lstlisting}
+        \begin{lstlisting}
 <Engine name="Catalina">
   <Host name="localhost" appBase="webapps"
     unpackWARs="true" autoDeploy="true">
-    <!-- contenu de l'élément Host -->
+    <!-- contenu de l'element Host -->
   </Host>
 </Engine>
-		\end{lstlisting}
+        \end{lstlisting}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{conf/server.xml}
 		Resssources et variables d'environnement
 
-		\begin{lstlisting}
+        \begin{lstlisting}
 <GlobalNamingResources>
   <Resource name="UserDatabase" auth="Container" type="org.apache.catalina.UserDatabase" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" pathname="conf/tomcat-users.xml" />
   <Environment name="maxRetry" type="java.lang.Integer" value="10" override="false"/>
 </GlobalNamingResources>
 
-		\end{lstlisting}
+        \end{lstlisting}
 \end{frame}
 
 \subsection{Déploiement d'une application}
