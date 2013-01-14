@@ -2,13 +2,13 @@
 %Nicolas
 \subsection{Presentation}
 \begin{frame}
-  \frametitle{Présentation de Tomcat}
+  \frametitle{PrÃ©sentation de Tomcat}
 
   \begin{itemize}
     \item Projet open-source de la fondation Apache
     \item Serveur d'applications Java
     \begin{itemize}
-      \item Servlet (génération de page Html, xml etc...)
+      \item Servlet (gÃ©nÃ©ration de page Html, xml etc...)
       \item JavaServer Pages
     \end{itemize}
     \item 
@@ -17,9 +17,9 @@
 
 \begin{frame}
   \frametitle{Autres serveurs d'applications existants}
-En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs implémentant les normes JEE (sécurité, ejbs, transactions globales...) :
+En rÃ©alitÃ©, Tomcat esseulement un conteneur de servlets, il existe des serveurs implÃ©mentant les normes JEE (sÃ©curitÃ©, ejbs, transactions globales...) :
 \begin{itemize} 
-  \item GlassFish (Développé par Oracle)
+  \item GlassFish (DÃ©veloppÃ© par Oracle)
   \item jBoss (Utilise Tomcat pour la partie Servlet/JSP)
   \item Websphere (IBM)
   \item ...
@@ -27,7 +27,7 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
 \end{frame}
 
 \begin{frame}
-  \frametitle{Présentation Tomcat
+  \frametitle{PrÃ©sentation Tomcat}
   \includegraphics[scale=0.5]{Images/serveurapp.png}
 \end{frame}
 
@@ -35,17 +35,17 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
 \begin{frame}
   \frametitle{Fichiers de configuration}
 
-		Répertoire d'installation : CATALINA\_HOME
+		RÃ©pertoire d'installation : CATALINA\_HOME
 \begin{itemize} 
-    \item \textbf{bin/} exécutables de Tomcat(démarrage du serveur)
-    \item \textbf{common/} classes et librairies partagées par les applications web
+    \item \textbf{bin/} exÃ©cutables de Tomcat(dÃ©marrage du serveur)
+    \item \textbf{common/} classes et librairies partagÃ©es par les applications web
     \item \textbf{conf/} Fichiers de configuration
-    \item \textbf{Logs/} Logs d'accès, erreurs...
-    \item \textbf{server/} contient les applications web du serveur en lui-même
-    \item \textbf{shared/} contient les classes et librairies partagées par toutes les applications web hébergées sur le serveur
+    \item \textbf{Logs/} Logs d'accÃ¨s, erreurs...
+    \item \textbf{server/} contient les applications web du serveur en lui-mÃªme
+    \item \textbf{shared/} contient les classes et librairies partagÃ©es par toutes les applications web hÃ©bergÃ©es sur le serveur
     \item \textbf{temp/}
     \item \textbf{webapps/} contient les applications web
-    \item \textbf{work/} contient les JSP compilées
+    \item \textbf{work/} contient les JSP compilÃ©es
 \end{itemize} 
 \end{frame}
 
@@ -55,9 +55,9 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
 
 \begin{itemize}
   \item \$CATALINA\_HOME/server.xml : principal fichier de configuration
-  \item Eléments conteneurs (obligatoirs) : Engine, Host, Connector
-  \item Définition des services, protocoles, port utilisés, redirection vers des ressources externes, des serveurs externes
-  \item Eléments facultatifs : GlobalNamingResources, Resources, Realm et Valve.
+  \item ElÃ©ments conteneurs (obligatoirs) : Engine, Host, Connector
+  \item DÃ©finition des services, protocoles, port utilisÃ©s, redirection vers des ressources externes, des serveurs externes
+  \item ElÃ©ments facultatifs : GlobalNamingResources, Resources, Realm et Valve.
 \end{itemize} 
 
 \begin{lstlisting}
@@ -66,16 +66,16 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
   </Server>
 \end{lstlisting}
 		
-}
+\end{frame}
 
 
 \begin{frame}
   \frametitle{conf/server.xml}
-		Elément Connecteur
+		ElÃ©ment Connecteur
 		\begin{itemize} 
-   		\item objet Java capable d'écouter un port précis et comprenant un protocole précis
-    	\item redirige les requêtes qu'il reçoit au moteur de servlets
-      \item C'est l'élément qui reçoit les requêtes HTTP et les transmet au conteneur de servlet
+   		\item objet Java capable d'Ã©couter un port prÃ©cis et comprenant un protocole prÃ©cis
+    	\item redirige les requÃªtes qu'il reÃ§oit au moteur de servlets
+      \item C'est l'Ã©lÃ©ment qui reÃ§oit les requÃªtes HTTP et les transmet au conteneur de servlet
 		\end{itemize}
 
 		\begin{lstlisting}
@@ -90,17 +90,17 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
 
 \begin{frame}
     \frametitle{conf/server.xml}
-		Eléments Engine et Host
+		ElÃ©ments Engine et Host
 		\begin{itemize}
-   		\item \textbf{Elément Engine} : modélise le moteur de servlet, contient un ou plusieurs hosts
-    	\item \textbf{Elément Host} hôte virtuel (Similaire aux virtualhosts d'Apache)
+   		\item \textbf{ElÃ©ment Engine} : modÃ©lise le moteur de servlet, contient un ou plusieurs hosts
+    	\item \textbf{ElÃ©ment Host} hÃ´te virtuel (Similaire aux virtualhosts d'Apache)
 		\end{itemize}
 
 		\begin{lstlisting}
 <Engine name="Catalina">
   <Host name="localhost" appBase="webapps"
     unpackWARs="true" autoDeploy="true">
-    <!-- contenu de l'élément Host -->
+    <!-- contenu de l'Ã©lÃ©ment Host -->
   </Host>
 </Engine>
 		\end{lstlisting}
@@ -119,7 +119,7 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
 		\end{lstlisting}
 \end{frame}
 
-\subsection{Déploiement d'une application}
+\subsection{DÃ©ploiement d'une application}
 \begin{frame}
 \frametitle{Via le manager}
 	Installation d'une application web sous la forme d'une archive war
@@ -131,7 +131,7 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs 
 
   \begin{itemize}
     \item Placer l'archive war dans le dossier webapps/
-    \item Tomcat dÃcompresse l'application au démarrage
+    \item Tomcat dÃ©compresse l'application au dÃ©marrage
     \item L'application est accessible par l'url http://serveur.tld/nom\_archive\_war
   \end{itemize}
 \end{frame}
