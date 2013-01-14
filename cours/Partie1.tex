@@ -1,6 +1,43 @@
 \section{Généralités sur l'administration sous Linux}
 %Sacha
+\subsection{Serveur dédié}
 
+\begin{frame}{Qu'est-ce qu'un serveur ?}
+
+\begin{itemize}
+  \item Unité dans un datacenter
+  \item Serveur \textit{headless}
+  \begin{itemize}
+    \item Pas d'écran, ni de clavier, ni de souris
+  \end{itemize}
+\end{itemize}
+  \begin{center} 
+      \includegraphics[scale=0.50]{Images/server.png}
+  \end{center}
+
+\end{frame}
+\begin{frame}{Quel système d'exploitation ?}
+
+\begin{itemize}
+  \item Microsoft Windows Server
+  \item Linux distribution (Debian, CentOS, Ubuntu Server, etc.)
+  \item FreeBSD, Solaris, etc.
+
+\end{itemize}
+
+\end{frame}
+\begin{frame}{Pourquoi Linux ?}
+
+\begin{itemize}
+  \item Pas d'environnement de bureau
+  \begin{itemize}
+    \item Administration en ligne de commande (SSH)
+    \item Administration web (Webmin, Plesk, GNUPanel, etc.)
+  \end{itemize}
+
+\end{itemize}
+
+\end{frame}
 \subsection{GNU/Linux}
 
 \begin{frame}{GNU/Linux}
@@ -17,7 +54,9 @@
 
 \frame{\frametitle{GNU/Linux}
 		\framesubtitle{Architecture GNU/Linux}
-  %\includegraphics[scale=0.25]{Images/gnulinux.pdf}
+  \begin{center} 
+      \includegraphics[scale=0.33]{Images/gnulinux.pdf}
+  \end{center}
 }
 
 
@@ -25,30 +64,18 @@
 \begin{frame}{Distribution linux}
 
 \begin{itemize}
-\item Distribution GNU/Linux = Noyaux Linux + Utilitaire et bibliothèques GNU + ...
-\begin{itemize} \item Un système d'exploitation composé d'un ensemble de logiciels stable et cohérent  \end{itemize}
+\item Distribution GNU/Linux = 
+\begin{itemize} 
+        \item Noyaux Linux + Utilitaire et bibliothèques GNU + ...
+
+        \item Un système d'exploitation composé d'un ensemble de logiciels stable et cohérent  \end{itemize}
 \item Trois familles historiques de distributions linux :
   \begin{itemize}
     \item Debian (Debian, Ubuntu, Knopix, etc.)
     \item Slackware (Slackware, S.u.S.E, openSuse, etc.)
     \item Red Hat (Red Hat Enterprise, Mandriva, Fedora, etc...)
   \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\subsection{Debian GNU/Linux}
-\begin{frame}{Debian GNU/Linux}
-
-\begin{itemize}
-\item 
-\begin{itemize} \item Un système d'exploitation composé d'un ensemble de logiciels stable et cohérent  \end{itemize}
-\item Trois familles historiques de distributions linux :
-  \begin{itemize}
-    \item Debian (Debian, Ubuntu, Knopix, etc.)
-    \item Slackware (Slackware, S.u.S.E, openSuse, etc.)
-    \item Red Hat (Red Hat Enterprise, Mandriva, Fedora, etc...)
-  \end{itemize}
+\item \href{ldt.pdf}{Linux Distribution Timeline}
 \end{itemize}
 
 \end{frame}
