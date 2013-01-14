@@ -49,7 +49,7 @@ Certaines étapes du TP ne sont volontairement pas trop détaillées. L'objectif
 Afin d'être dans des conditions les plus réalistes possibles, vous allez travailler sur un serveur dédié (virtuel) hébergé chez ovh. Vous disposez d'un serveur et de l'accès root correspondant (demandez nous le mot de passe root !).
 
 \paragraph{}
-Chaque serveur est pointé par deux noms de domaines : a.bx.3f0.net et b.bx.3f0.net, où "x" est le numéro de votre binome (de 1 à 8). Connectez vous avec ssh à votre serveur et démarrez le TP !
+Chaque serveur est pointé par deux noms de domaines : a.bx.ab0.fr et b.bx.ab0.fr, où "x" est le numéro de votre binôme (de 1 à 8). Connectez vous avec ssh à votre serveur et démarrez le TP !
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 \section{Installation et configuration d'Apache}
@@ -146,7 +146,7 @@ Documentation intéressante :
 La configuration par défaut de Tomcat nous conviendra bien. Il s'agit maintenant de le lancer. Comme nous ne l'avons pas installé via le gestionnaire de paquets, il n'y a pas de script de lancement automatique dans /etc/init.d. Il serait possible d'en créer un mais nous n'en parlerons pas dans ce TP. Les instructions de lancement se trouvent dans le fichier RUNNING.txt de l'archive de tomcat (sections 3 et 4). Pour l'emplacement de la jdk, cherchez du coté de /usr/lib/jvm.
 
 \paragraph{}
-Une fois Tomcat lancé, testez son bon fonctionnement en vous connectant à votre serveur sur le port 8080 depuis votre navigateur (http://a.bx.3f0.net:8080/).
+Une fois Tomcat lancé, testez son bon fonctionnement en vous connectant à votre serveur sur le port 8080 depuis votre navigateur (http://a.bx.ab0.fr:8080/).
 
 \paragraph{Configurez les droits pour pouvoir accéder au manager\\}
 La page d'accueil de Tomcat comporte des liens d'administration du serveur (les trois boutons sur la droite). Cependant, aucun accès n'est configuré pour ces pages. Vous devrez modifier la configuration de Tomcat dans le fichier conf/tomcat-users.xml et ajouter un utilisateur ayant le role "manager-gui" pour pouvoir accéder à ces pages de configuration. N'oubliez pas de redémarrer Tomcat avant de tester !
@@ -160,16 +160,16 @@ Comme vous avez pu le constater, Tomcat écoute par défaut sur le port 8080. Il
 Il serait possible d'utiliser un handler comme nous l'avons fait pour le C++, mais cette solution serait complexe et inutile puisqu'il existe un module apache permettant de faire cette liaison : mod\_jk.
 
 \paragraph{Installez le connecteur mod\_jk\\}
-Le nom du paquet est "libapache2-mod-jk". 
+Le nom du paquet est "libapache2-mod-jk". Une fois l'installation terminée, vous pouvez constater l'apparition du fichier /etc/apache2/mods-available/jk.load contenant l'option permettant à Apache de charger le module. Par défaut, ce mod n'a pas de fichier jk.conf, mais vous allez le créer dans la suite du tp.
 
 \paragraph{Configurez le worker correspondant à tomcat\\}
 La configuration se fait dans le fichier /etc/libapache2-mod-jk/workers.properties. Les options intéressantes sont en particulier la localisation de votre installation de Tomcat et la localisation de votre JRE. Relevez le nom du worker, il sera utile plus tard.
 
 \paragraph{}
-Vous devez ensuite configurer l'emplacement du fichier de configuration dans le fichier /etc/apache2/mods-available/jk.load avec l'option de configuration JkWorkersFile.
+Vous devez ensuite configurer l'emplacement du fichier de configuration dans le fichier /etc/apache2/mods-available/jk.conf (que vous devez créer s'il n'existe pas) avec l'option JkWorkersFile.
 
 \paragraph{Configurez l'un de vos virtualhosts pour rediriger toutes les requêtes vers Tomcat\\}
-Choisissez l'un de vos virtualhosts et modifiez son fichier de configuration.
+Choisissez l'un de vos virtualhosts et modifiez son fichier de configuration (dans /etc/apache2/sites-availables/). Vous devrez utiliser l'option JkMount pour rediriger les requêtes vers Tomcat.
 
 \paragraph{}
 Documentation utile : 
@@ -179,10 +179,13 @@ Documentation utile :
 \end{itemize}
 
 \paragraph{Testez votre configuration en accédant au virtualhost que vous venez de configurer\\}
-Vous devriez avoir accès à la page d'accueil de Tomcat en vous rendant sur le virtualhost que vous venez de configurer \textbf{sans} préciser le numéro de port. La requête doit bien être recue par Apache, puis transmise à Tomcat.
+Vous devriez avoir accès à la page d'accueil de Tomcat en vous rendant sur le virtualhost que vous venez de configurer \textbf{sans} préciser le numéro de port. La requête doit bien être reçue par Apache, puis transmise à Tomcat.
 
 \paragraph{Optionnel : Déployez une application Java EE\\}
-Vous pouvez maintenant déployer une application Java EE via l'interface de tomcat, et y accéder via apache (http://a.bx.3f0.net/application). Si vous voulez y accéder directement, sans préciser le nom de l'application, il faudra modifier la configuration d'Apache, en utilisant l'url rewriting par exemple.
+Vous pouvez maintenant déployer une application Java EE via l'interface de tomcat, et y accéder via apache (http://a.bx.ab0.fr/application). Si vous voulez y accéder directement, sans préciser le nom de l'application, il faudra modifier la configuration d'Apache, en utilisant l'url rewriting par exemple.
+
+\paragraph{}
+Un fichier war (application Java EE archivée) est disponible à l'adresse suivante : a.ab0.fr/tp/sample.war
 
 \section{Pour les plus rapides}
 
