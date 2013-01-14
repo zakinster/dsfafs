@@ -99,20 +99,33 @@ Documentation intéressante :
 \paragraph{}
 Maintenant que le serveur HTTP Apache est installé et que la gestion de contenu statique est fonctionnelle, il est possible de s'intéresser à la gestion de contenu dynamique. Pour ce faire, il existe plusieurs méthodes qui permettent d'interfacer Apache avec du code externe capable d'interpréter des pages dynamiques. Nous allons ici nous intéresser à la plus simple d'entre elles : le CGI.
 
+\paragraph{Créez la page web dynamique qui sera interprétée\\}
+Vous allez simuler une page dynamique, ou le caractère $ sera remplacé par une autre chaine de caractère lors de l'accès au fichier. Créez un fichier test.exe avec le contenu suivant : 
+\begin{verbatim}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ma page dynamique !</title>
+  </head>
+  <body>
+    <h1>$</h1>
+  </body>
+</html>
+\end{verbatim}
+
 \subsubsection{Un handler CGI}
 
 \paragraph{}
-L'objectif est de déléguer la gestion de certains types de fichiers à un exécutable externe à Apache. La première étape consiste donc à obtenir cet exécutable, que l'on appelera \textit{Handler}. Vous disposez dans les fichiers du TP du fichier source d'un handler simpliste développé en C++. Afin qu'Apache puisse executer ce programme, vous devez le compiler puis placer l'executable dans le dossier $/usr/lib/cgi-bin/$.
+L'objectif est de déléguer la gestion de certains types de fichiers à un exécutable externe à Apache. La première étape consiste donc à obtenir cet exécutable, que l'on appelera \textit{Handler}. 
 
-\subsubsection{Configuration du handler}
-\paragraph{}
-Pour la suite de cette partie, la configuration se fera sur un des VirtualHost définis préalablement.
+\paragraph{Téléchargez, compilez et installez le handler\\}
+Le fichier source du handler est disponible sur http://a.ab0.fr/tp.handler.cpp. Une fois compilé, déplacez l'exécutable dans /usr/lib/cgi-bin/. N'oubliez pas de vérifier que Apache a les droits pour exécuter ce fichier. Le programme est très simple mais montre le principe des sites web dynamiques : il lit le fichier, effectue des modifications avant d'afficher le résultat. Apache récupère ce résultat et l'envoie au client.
 
-\paragraph{}
+\paragraph{Configurez un des virtualhosts pour utiliser le handler}
 Pour déléguer la gestion de certain types de fichiers vous devez commencer par définir les extensions de fichiers que vous voulez prendre en compte en utilisant la commande AddHandler.
 
 \begin{lstlisting}
-AddHandler app-binary .c 
+AddHandler app-binary .exe
 \end{lstlisting}
 
 Vous devez ensuite définir le handler que vous voulez appeler en utilisant la commande Action.
@@ -121,7 +134,19 @@ Vous devez ensuite définir le handler que vous voulez appeler en utilisant la c
 Action app-binary /cgi-bin/handler
 \end{lstlisting}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ùù
+\paragraph{}
+Il peut être nécéssaire d'activer le mod mod\_actions pour utiliser l'option Action d'Apache.
+
+\paragraph{}
+Documentation intéressante : 
+\begin{itemize}
+\item Le manuel des commandes wget et chmod
+\item La documentation des options de configuration AddHandler, Action
+\end{itemize}
+
+\paragraph{Testez votre configuration en accédant au fichier test.exe depuis votre navigateur}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Installation et configuration de Tomcat}
 
 \subsection{Installation et lancement}
