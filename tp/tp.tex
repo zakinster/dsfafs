@@ -119,9 +119,9 @@ Vous allez simuler une page dynamique, ou le caractère \$ sera remplacé par un
 L'objectif est de déléguer la gestion de certains types de fichiers à un exécutable externe à Apache. La première étape consiste donc à obtenir cet exécutable, que l'on appelera \textit{Handler}. 
 
 \paragraph{Téléchargez, compilez et installez le handler\\}
-Le fichier source du handler est disponible sur http://a.ab0.fr/tp.handler.cpp. Une fois compilé, déplacez l'exécutable dans /usr/lib/cgi-bin/. N'oubliez pas de vérifier que Apache a les droits pour exécuter ce fichier. Le programme est très simple mais montre le principe des sites web dynamiques : il lit le fichier, effectue des modifications avant d'afficher le résultat. Apache récupère ce résultat et l'envoie au client.
+Le fichier source du handler est disponible sur http://a.ab0.fr/tp/handler.cpp. Une fois compilé, déplacez l'exécutable dans /usr/lib/cgi-bin/. N'oubliez pas de vérifier que Apache a les droits pour exécuter ce fichier. Le programme est très simple mais montre le principe des sites web dynamiques : il lit le fichier, effectue des modifications avant d'afficher le résultat. Apache récupère ce résultat et l'envoie au client.
 
-\paragraph{Configurez un des virtualhosts pour utiliser le handler}
+\paragraph{Configurez un des virtualhosts pour utiliser le handler\\}
 Pour déléguer la gestion de certain types de fichiers vous devez commencer par définir les extensions de fichiers que vous voulez prendre en compte en utilisant la commande AddHandler.
 
 \begin{lstlisting}
@@ -210,7 +210,7 @@ Vous devriez avoir accès à la page d'accueil de Tomcat en vous rendant sur le 
 Vous pouvez maintenant déployer une application Java EE via l'interface de tomcat, et y accéder via apache (http://a.bx.ab0.fr/application). Si vous voulez y accéder directement, sans préciser le nom de l'application, il faudra modifier la configuration d'Apache, en utilisant l'url rewriting par exemple.
 
 \paragraph{}
-Un fichier war (application Java EE archivée) est disponible à l'adresse suivante : a.ab0.fr/tp/sample.war
+Un fichier war (application Java EE archivée) est disponible à l'adresse suivante :\\ a.ab0.fr/tp/sample.war
 
 \section{Pour les plus rapides}
 
