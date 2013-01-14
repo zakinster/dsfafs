@@ -11,13 +11,12 @@
       \item Servlet (génération de page Html, xml etc...)
       \item JavaServer Pages
     \end{itemize}
-    \item 
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Autres serveurs d'applications existants}
-En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveurs implémentant les normes JEE (sécurité, ejbs, transactions globales...) :
+En réalité, Tomcat est seulement un conteneur de servlets, il existe des serveurs implémentant les normes JEE (sécurité, ejbs, transactions globales...) :
 \begin{itemize} 
   \item GlassFish (Développé par Oracle)
   \item jBoss (Utilise Tomcat pour la partie Servlet/JSP)
@@ -55,7 +54,7 @@ En réalité, Tomcat esseulement un conteneur de servlets, il existe des serveur
 
 \begin{itemize}
   \item \$CATALINA\_HOME/server.xml : principal fichier de configuration
-  \item Eléments conteneurs (obligatoirs) : Engine, Host, Connector
+  \item Eléments conteneurs (obligatoires) : Engine, Host, Connector
   \item Définition des services, protocoles, port utilisés, redirection vers des ressources externes, des serveurs externes
   \item Eléments facultatifs : GlobalNamingResources, Resources, Realm et Valve.
 \end{itemize} 
